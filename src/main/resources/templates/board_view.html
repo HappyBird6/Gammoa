@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>GAMMOA</title>
+    <meta content="Templines" name="author">
+    <meta content="TeamHost" name="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="format-detection" content="telephone=no">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/libs.min.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <!-- <link rel="stylesheet" href="../css/list_custom.css" /> -->
+    <!-- <link rel="stylesheet" href="../css/main_custom.css" /> -->
+    <link rel="stylesheet" href="../css/crawling.css" />
+
+
+    <script src="../js/module/swiper.js"></script>
+    <script src="../js/libs.js"></script>
+    <script src="../js/main.js"></script>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&display=swap" rel="stylesheet">
+
+</head>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const active = document.getElementById("[[${navBoard}]]");
+        active.classList.add("uk-active");
+        const submenu = active.parentNode;
+        submenu.classList.remove("none");
+    });
+</script>
+
+<script type="text/javascript">
+    // 답글 입력 폼의 표시/숨김을 토글
+    function toggleReplyForm(span) {
+        const commentId = span.getAttribute("data-comment-id");
+        const replyForm = document.querySelector(`.reply-form[data-comment-id="${commentId}"]`);
+        replyForm.style.display = replyForm.style.display === "none" ? "block" : "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // 댓글 작성 확인 함수 부분
+        document.getElementById('cbtn').addEventListener('click', function () {
+            document.getElementsByName("ccontent").value;
+            document.getElementsByName("postId").value;
+            document.cfrm.submit();
+        });
+        // 댓글 삭제 확인
+        const deleteButtons = document.getElementsByClassName("delete-comment");
+        Array.from(deleteButtons).forEach(button => {
+            button.addEventListener('click', function () {
+                const commentId = button.getAttribute("data-comment-id");
+                console.log('클릭');
+
+                const form = document.getElementById('dcfrm');
+                const commentIdInput = document.createElement('input');
+                commentIdInput.type = 'hidden';
+                commentIdInput.name = 'comment_id';
+                commentIdInput.value = commentId;
+                form.appendChild(commentIdInput);
+                document.getElementsByName("rcontent").value;
+                // form을 submit
+                form.submit();
+            });
+        });
+    });
+</script>
+<script>
+    function submitReplyForm(parent_comment_id) {
+        var use = "rcontent"+parent_comment_id;
+        var rcontent = document.getElementById(use).value;
+        var boardCd = [[${ post.boardCd }]];
+        var postId = [[${ post.postId }]];
+        var cpage = [[${ cpage }]];
+        var parent_comment_id = parent_comment_id;
+
+        console.log("rcontent : " + rcontent);
+        console.log("boardCd : " + boardCd);
+        console.log("postId : " + postId);
+        console.log("cpage : " + cpage);
+        console.log("parent_comment_id : " + parent_comment_id);
+
+        var replyHref = `reply_comment_write_ok?board_cd=${boardCd}&post_id=${postId}&cpage=${cpage}&rcontent=${rcontent}&parent_comment_id=${parent_comment_id}`;
+        console.log(replyHref);
+        window.location.href = replyHref;
+    }
+</script>
+
+<body class="page-home dark-theme">
+
+    <input id="toggle" type="checkbox">
+
+
+
+    <!-- Loader-->
+    <div th:replace="~{fragments/loader :: loader1Fragment}" id="page-preloader"></div>
+    <!-- Loader end-->
+
+    <div class="page-wrapper">
+        <!-- 헤더 Fragment -->
+        <header th:replace="~{fragments/header :: headerFragment}">헤더 Fragment</header>
+        <!--  -->
+        <div class="page-content">
+            <!-- 사이드바 Fragment -->
+            <aside th:replace="~{fragments/sidebar :: sidebarFragment}" clsss="sidebar is-show" id="sidebar">사이드바
+                Fragment</aside>
+            <!--  -->
+
+            <!-- 메인 -->
+            <main class="page-main">
+                <div class="widjet --filters">
+                    <div class="widjet__head">
+                        <h3 class="uk-text-lead" th:text='${boardCd_name}'></h3>
+                    </div>
+                </div>
+                <div class="widjet --filters">
+                    <div class="widjet__body">
+                        <div class="uk-grid uk-child-width-1-1@xl uk-child-width-1-1@xl uk-child-width-1-2@s uk-flex-middle uk-grid-small" data-uk-grid>
+                            <div class="uk-width-1-1">
+                                <!--게시판 코드 들어가는 장소-->
+                                <div class="widjet-game__title">
+                                    <div class="contents_sub">
+                                        <div class="board_view">
+                                            <!-- Post title-->
+                                            <h3 class="board_view_title fw-bolder mb-1"
+                                                th:text="'[' + ${post.postTags} + '] ' + ${post.postTitle}"></h3>
+                                            <table>
+                                                <tr>
+                                                    <th width="10%">글쓴이</th>
+                                                    <td width="10%" th:text="${post.member.memNick}"></td>
+                                                    <th width="10%">등록일</th>
+                                                    <td width="20%"
+                                                        th:text="${#dates.format(post.updatedAt, 'yyyy-MM-dd')}"></td>
+                                                    <th width="10%">조회</th>
+                                                    <td width="20%" th:text="${post.postHit}"></td>
+                                                </tr>
+                                            </table>
+                                            <table class="board_view_table">
+                                                <tr>
+                                                    <td colspan="4" valign="top"
+                                                        style="padding: 20px; line-height: 160%"
+                                                        th:utext="${post.postContent}"></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <form action="comment_delete_ok" method="post" name="dcfrm" id="dcfrm">
+                                            <input type="hidden" name="board_cd" th:value="${post.boardCd}" />
+                                            <input type="hidden" name="post_id" th:value="${post.postId}" />
+                                            <input type="hidden" name="cpage" th:value="${cpage}" />
+                                            <div class="uk-grid uk-grid-small uk-child-width-1-1@m" data-uk-grid>
+                                                <div><br /><strong>댓글</strong>
+                                                    <div class="comment_view">
+                                                        <div class="user-item --active" th:each="commentNode : ${commentTree}">
+                                                            <!-- 댓글 내용 출력 -->
+                                                            <div class="user-item__box">
+                                                                <strong><span th:text="${commentNode.comment.member.memNick}"></span></strong>
+                                                                (<span th:text="${#dates.format(commentNode.comment.updatedAt, 'yyyy-MM-dd hh:mm')}"></span>)
+                                                                <a th:if="${writePost}">
+                                                                    <span class="delete-comment" th:attr="data-comment-id=${commentNode.comment.commentId}" style="cursor: pointer; color: red;"> x </span>
+                                                                </a><br />
+                                                                <div class="coment_re_txt" th:text="${commentNode.comment.commentContent}"></div>
+                                                                <!-- 대댓글 쓰기 -->
+                                                                <a>
+                                                                    <span class="reply-text" th:attr="data-comment-id=${commentNode.comment.commentId}" onclick="toggleReplyForm(this)">답글 쓰기</span>
+                                                                    <div class="reply-form" th:attr="data-comment-id=${commentNode.comment.commentId}" style="display: none;">
+                                                                        <form action="reply_comment_write_ok" method="post" name="rfrm" id="rfrm">
+                                                                            <input type="hidden" name="board_cd" th:value="${post.boardCd}" />
+                                                                            <input type="hidden" name="post_id" th:value="${post.postId}" />
+                                                                            <input type="hidden" name="cpage" th:value="${cpage}" />
+                                                                            <input type="hidden" id="parent_comment_id" name="parent_comment_id" th:value="${commentNode.comment.commentId}" />
+                                                                            <textarea name="rcontent" th:id="'rcontent' + ${commentNode.comment.commentId}" cols="" rows="" class="reply-textarea" placeholder="댓글 내용을 입력하세요" style="width: 100%;"></textarea>
+                                                                            <input type="button" id="rbtn" value="답글 등록" class="reply-button" th:onclick="'submitReplyForm(' + ${commentNode.comment.commentId} + ' )'" />
+                                                                        </form>
+                                                                    </div>
+                                                                </a>
+                                                                <!-- 대댓글 표시 -->
+                                                                <div th:each="reply : ${commentNode.replies}">
+                                                                    <div class="user-item__box">
+                                                                        <strong><span th:text="${reply.comment.member.memNick}"></span></strong>
+                                                                        (<span th:text="${#dates.format(reply.comment.updatedAt, 'yyyy-MM-dd hh:mm')}"></span>)
+                                                                        <a th:if="${writePost}">
+                                                                            <span class="delete-comment" th:attr="data-comment-id=${reply.comment.commentId}" style="cursor: pointer; color: red;"> x </span>
+                                                                        </a><br />
+                                                                        <div class="coment_re_txt" th:text="${reply.comment.commentContent}"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <form action="comment_write_ok" method="post" name="cfrm">
+                                        <input type="hidden" name="board_cd" th:value="${post.boardCd}" />
+                                        <input type="hidden" name="cpage" th:value="${cpage}" />
+                                        <input type="hidden" name="post_id" th:value="${post.postId}" />
+                                        <table>
+                                            <tr>
+                                                <td class="bg01" width="100%">
+                                                    <!-- 내용 입력<br/> -->
+                                                    <textarea name="ccontent" cols="" rows="" class="coment_input_text"
+                                                        placeholder="댓글 내용을 입력하세요" style="width: 100%;"></textarea>
+                                                </td>
+                                                <td align="right" class="bg01 bg02">
+                                                    <a>
+                                                        <input type="button" id="cbtn" value="댓글등록"
+                                                            class="btn_re btn_txt01" />
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                    <div class="uk-grid uk-child-width-1-1@xl uk-child-width-1-1@xl uk-child-width-1-1@s uk-flex-middle uk-grid-small btn_area" data-uk-grid>
+                                        <div class="width-1-2 uk-flex uk-flex-between">
+                                            <div>
+                                                <a th:href="@{list(board_cd=${post.boardCd}, cpage=${cpage})}"><input
+                                                        type="button" value="목록" class="btn_list btn_txt02"></a>
+                                            </div>
+                                            <div class="align_right">
+                                                <a th:if="${writePost}"
+                                                    th:href="@{modify(post_id=${post.postId}, cpage=${cpage})}">
+                                                    <!-- 본인이 작성한 글이면 보임 -->
+                                                    <input type="button" value="수정" class="btn_list btn_txt02">
+                                                </a>
+                                                <a th:if="${writePost}"
+                                                    th:href="@{delete(post_id=${post.postId}, cpage=${cpage})}">
+                                                    <!-- 본인이 작성한 글이면 보임 -->
+                                                    <input type="button" value="삭제" class="btn_list btn_txt02">
+                                                </a>
+                                                <a th:href="@{write(board_cd=${post.boardCd})}">
+                                                    <!-- 로그인 상태인 경우의 링크 -->
+                                                    <input type="button" value="쓰기" class="btn_write btn_txt01">
+                                                </a>
+                                            </div>
+                                        <!--//게시판-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+            </main>
+        </div>
+    </div>
+    <div th:replace="~{fragments/mainModal :: mainModalFragment}"></div>
+    
+
+</body>
+
+</html>

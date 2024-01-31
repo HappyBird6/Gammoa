@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <title>GAMMOA</title>
+        <meta content="Templines" name="author">
+        <meta content="TeamHost" name="description">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="format-detection" content="telephone=no">
+        <meta content="IE=edge; chrome=1" http-equiv="X-UA-Compatible">
+        <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+        <link rel="stylesheet" href="../css/libs.min.css">
+        <link rel="stylesheet" href="../css/main.css">
+        <link rel="stylesheet" href="../css/main_custom.css" />
+        <link rel="stylesheet" href="../css/shop_custom.css" />
+        <link rel="stylesheet" href="../css/ranking.css" />
+        
+        <script src="./js/libs.js"></script>
+        <script src="./js/main.js"></script>
+        <script src="./js/shop.js"></script>
+
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Marcellus&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+            integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </head>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const active = document.getElementById("[[${navshop}]]");
+            active.classList.add("uk-active");
+        });
+
+        function addToPreviewList(itemName, category) {
+            let previewList = document.getElementById('previewList');
+            let PreviewHeader = document.querySelector('.profile-header');
+            let PreviewCard = document.querySelector('.profile-card');
+            let PreviewShopBadge = document.querySelector('.shopbadge');
+            let listItem = "";
+            let deleteButton = "";
+            category = category.replace(/"/g, '');
+
+            // 미리보기 목록을 위한 리스트 아이템 생성
+            console.log(document.getElementById(category));
+            if(document.getElementById(category)==null){
+                listItem = document.createElement('li'); 
+                listItem.textContent = itemName;
+                listItem.id = category; // 카테고리 정보를 dataset으로 추가
+                listItem.classList.add('list-item'); // 'list-item' 클래스 추가
+
+                deleteButton = document.createElement('button');
+                deleteButton.textContent = 'x';
+                deleteButton.classList.add('delete-button'); // 'delete-button' 클래스 추가
+
+                    // 클릭 이벤트를 연결하여 해당 아이템을 제거하는 함수 호출
+                deleteButton.addEventListener('click', function (event) {
+                    event.stopPropagation(); // 이벤트 버블링 방지
+                    removeFromPreviewList(listItem);
+                    switch (category) {
+                        case '801': PreviewHeader.style.backgroundImage = ""; break;
+                        case '802': PreviewCard.style.backgroundImage = ""; break;
+                        case '803': PreviewShopBadge.style.backgroundImage = ""; break;
+                    }
+                });
+
+                // 제거 버튼을 리스트 아이템에 추가
+                listItem.appendChild(deleteButton);
+                previewList.appendChild(listItem);
+            } else {
+                listItem = document.getElementById(category);
+                listItem.textContent = itemName;
+
+                deleteButton = document.createElement('button');
+                deleteButton.textContent = 'x';
+                deleteButton.classList.add('delete-button'); // 'delete-button' 클래스 추가
+
+                    // 클릭 이벤트를 연결하여 해당 아이템을 제거하는 함수 호출
+                deleteButton.addEventListener('click', function (event) {
+                    event.stopPropagation(); // 이벤트 버블링 방지
+                    removeFromPreviewList(listItem);
+                    switch (category) {
+                        case '801': PreviewHeader.style.backgroundImage = ""; break;
+                        case '802': PreviewCard.style.backgroundImage = ""; break;
+                        case '803': PreviewShopBadge.style.backgroundImage = ""; break;
+                    }
+                });
+
+                // 제거 버튼을 리스트 아이템에 추가
+                listItem.appendChild(deleteButton);
+            }
+
+            
+        } 
+
+        function showPreview(itemName, category) {
+            // 프로필 미리보기 div 선택
+            let PreviewHeader = document.querySelector('.profile-header');
+            let PreviewCard = document.querySelector('.profile-card');
+            let PreviewShopBadge = document.querySelector('.shopbadge');
+            let previewList = document.getElementById('previewList');
+
+            // 아이템 이름과 카테고리에서 큰 따옴표 제거
+            itemName = itemName.replace(/"/g, '');
+            category = category.replace(/"/g, '');
+
+            // 선택한 아이템에 맞는 이미지 경로 생성
+            let imagePath = './img/shop_img/' + itemName + '.png';
+
+            // 각 분류에 따라 스타일 변경
+            if (category === '801') {
+                // 미리보기 div의 배경 이미지 변경
+                if (PreviewHeader.style.backgroundImage==""){
+                    PreviewHeader.style.backgroundImage = 'url(' + imagePath + ')';
+                } else {
+                    removeBeforeItem(itemName);
+                    PreviewHeader.style.backgroundImage = 'url(' + imagePath + ')';
+                }
+            } else if (category === '802') {
+                if (PreviewCard.style.backgroundImage==""){
+                    PreviewCard.style.backgroundImage = 'url(' + imagePath + ')';
+                } else {
+                    removeBeforeItem(itemName);
+                    PreviewCard.style.backgroundImage = 'url(' + imagePath + ')';
+                }
+            } else if (category === '803') {
+                if (PreviewShopBadge.style.backgroundImage==""){
+                    PreviewShopBadge.style.backgroundImage = 'url(' + imagePath + ')';
+                } else {
+                    removeBeforeItem(itemName);
+                    PreviewShopBadge.style.backgroundImage = 'url(' + imagePath + ')';
+                }
+            }
+
+            // 미리보기 div를 화면에 보이도록 설정
+            // PreviewHeader.style.display = 'block';
+
+            // 미리보기 목록에 아이템 추가하는 함수 호출
+            addToPreviewList(itemName, category);
+        }
+        // 미리보기 할 때 다른 아이템을 미리보기 시 이전 아이템을 리스트에서 없애는 함수
+        function removeBeforeItem(item){
+            var list = document.getElementById('previewList');
+            var beforeitem = list.getElementsByTagName('li');
+            for (var i=0; i<beforeitem.length; i++){
+                if(beforeitem[i].textContent==item){
+                    beforeitem.innerHTML="";
+                }
+            }
+        }
+
+        // 미리보기 목록에서 아이템을 제거하는 함수
+        function removeFromPreviewList(listItem) {
+            let previewList = document.getElementById('previewList');
+            // 미리보기 목록에서 해당 리스트 아이템 제거
+            previewList.removeChild(listItem);
+        }
+    </script>
+
+    <body class="page-store dark-theme">
+        <input id="toggle" type="checkbox">
+        
+        <!-- Loader-->
+        <div th:replace="~{fragments/loader :: loader1Fragment}" id="page-preloader"></div>
+        <!-- Loader end-->
+
+        <div class="page-wrapper">
+            <!-- 헤더 Fragment -->
+            <header th:replace="~{fragments/header :: headerFragment}">헤더 Fragment</header>
+            <!--  -->
+            <div class="page-content">
+                <!-- 사이드바 Fragment -->
+                <aside th:replace="~{fragments/sidebar :: sidebarFragment}" clsss = "sidebar is-show" id="sidebar">사이드바 Fragment</aside>
+                <!-- 메인 -->
+                <main class="page-main">
+                    <div class="flex-container">
+                        <div class="widjet-container">
+                            <div class="widjet --filters">
+                                <div class="widjet__head">
+                                    <h3 class="uk-text-lead">Item Shop</h3>
+                                </div>
+                                <div class="widjet__body">
+                                    <div class="uk-grid uk-child-width-1-3@xl uk-child-width-1-2@l uk-child-width-1-1@s uk-flex-middle uk-grid-small" data-uk-grid>
+                                        <div class="uk-width-1-6">
+                                            <select class="js-select" id="categorySelect" th:onchange="changeCategori()">
+                                                <option value="all">카테고리: all</option>
+                                                <option value="801">카테고리 : 테두리</option>
+                                                <option value="802">카테고리 : 프로필 배경</option>
+                                                <option value="803">카테고리 : 뱃지</option>
+                                            </select>
+                                        </div>
+                                        <div class="uk-width-2-3 uk-width-expand">
+                                            <div class="search">
+                                                <!-- <div class="search__input"><i class="ico_search"></i><input type="search" name="search" placeholder="Search" id="ItemSearch"></div> -->
+                                                <!-- <div class="search__btn"><button type="button"><i class="ico_search"></i></button></div> -->
+                                                <div class="search__input"><i class="ico_search"></i><input type="search" name="search" placeholder="Search" id="ItemSearch"></div>
+                                                <div class="search__btn"><button type="submit" th:onclick="changeCategori2()"><i class="ico_search"></i></button></div>
+                                            </div>
+                                        </div> 
+                                        <!-- <div class="uk-text-right"><a href="#!" th:text="'MyPint : ' + ${point}"></a></div> -->
+                                        <!-- <div class="uk-text-right"><a href="#!" th:text="${totalItemCount} + ' items'"></a></div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item_card uk-grid uk-child-width-1-5@xl uk-child-width-1-3@l uk-child-width-1-2@s uk-flex-middle uk-grid-small" data-uk-grid>
+                                <div th:each="item : ${items}">
+                                    <div class="game-card" th:data-category="${item.itemKindCd}">
+                                        <div class="game-card__box">
+                                            <!-- <div class="game-card__media"><a href="#"><img th:src="@{'./img/shop_img/' + ${item.itemNm} + '.png'}" alt="Item Image" th:onclick="openPopup(this)"/></a></div> -->
+                                            <div class="game-card__media"><a href="#"><img th:src="@{'./img/shop_img/' + ${item.itemNm} + '.png'}" alt="Item Image" th:onclick="showPreview('[[${item.itemNm}]]', '[[${item.itemKindCd}]]')"/></a></div>
+                                            <div class="game-card__info"><a class="game-card__title" href="#" th:text="${item.itemNm}"></a>
+                                                <div class="game-card__genre" th:text="${item.itemInfo}"></div>
+                                                <div class="game-card__rating-and-price">
+                                                    <div class="game-card__rating"></div>
+                                                    <div class="game-card__price"><span th:text="${item.itemCost}"></span>&nbsp;<span>Point</span></div>
+                                                </div>
+                                                <div class="game-card__bottom">
+                                                    <input class="select_btn" type='submit' value='미리보기' th:onclick="showPreview('[[${item.itemNm}]]', '[[${item.itemKindCd}]]')">
+                                                    <div th:if="${memId eq null}">
+                                                        <input class="select_Get_btn" type='button' value='구매' onclick="return showLoginAlert()">
+                                                        <script th:inline="javascript">
+                                                            function showLoginAlert() {
+                                                                alert('로그인이 필요합니다.');
+                                                                location.href = './login';
+                                                            }
+                                                        </script>
+                                                    </div>
+                                                    <div th:if="${memId ne null}">
+                                                        <!-- memId가 있는 경우, 구매 버튼을 표시 -->
+                                                        <input th:if="${haveitem != null and not #lists.contains(haveitem, item.itemCd)}" class="select_Get_btn" type='button' value='구매' th:onclick="getItem('[[${item.itemCost}]]','[[${item.itemCd}]]')" >
+                                                        <input th:if="${haveitem != null and #lists.contains(haveitem, item.itemCd)}" class="have_item" type='button' value='보유 중' disabled >
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="widjet --filters shopfixed uk-width-1-5">
+                            <div class="widjet__head">
+                                <h3 class="uk-text-lead">Thumbnail</h3>
+                            </div>
+                            <div class="thumbnail widjet__body uk-width-1-1">
+                                <div class="uk-grid uk-child-width-1-1@xl uk-child-width-1-1@l uk-child-width-1-1@s uk-flex-middle uk-grid-small" data-uk-grid>
+                                    <!-- 배경 -->
+                                    <div class="uk-width-1-1" th:if="${memberProfile!=null}" th:switch="${memberProfile.profileCard}">
+                                        <!-- 프로필 카드 없음-->
+                                        <div th:case="x" class="profile-card">
+                                            <!-- 프로필 사진 테두리 있음-->
+                                            <a id="profile">
+                                                <div class="profile-header" th:if="${!memberProfile.profileHeader.equals('x')}" th:style="'background-image: url(../img/shop_img/' + ${memberProfile.profileHeader} + '.png);'">
+                                                    <div class="profile-image">
+                                                        <img th:if="${!memberProfile.profileImage.equals('x')}" th:src="'/image/' + ${memberProfile.profileImage}" alt="NO-IMAGE">
+                                                        <img th:if="${memberProfile.profileImage.equals('x')}" src="../img/doyun_icon.png" alt="NO-IMAGE">
+                                                    </div>
+                                                </div>
+                                                <!-- 프로필 사진 테두리 기본-->
+                                                <div class="profile-header" th:if="${memberProfile.profileHeader.equals('x')}">
+                                                    <div class="profile-image">
+                                                        <img th:if="${!memberProfile.profileImage.equals('x')}" th:src="'/image/' + ${memberProfile.profileImage}" alt="NO-IMAGE">
+                                                        <img th:if="${memberProfile.profileImage.equals('x')}" src="../img/doyun_icon.png" alt="NO-IMAGE">
+                                                    </div>
+                                                </div>
+                                                <div class="profile-user_info">
+                                                    <div class="profile-user_level"><span th:text="${'LV : ' + level}"></span></div>
+                                                    <div class="profile-user_nick"><span th:text="${nickname}"></span></div>
+                                                    <img class="badge" th:if="${!memberProfile.ProfileRepBadge.equals('x')}" th:src="@{'../img/shop_img/' + ${memberProfile.ProfileRepBadge} + '.png'}" alt="NO-SYMBOL">
+                                                    <img class="badge" th:if="${memberProfile.ProfileRepBadge.equals('x')}" alt="NO-SYMBOL">
+                                                </div>
+                                            </a>
+                                            <div class="profile-dividing-line"></div>
+                                            <div class="profile-main">
+                                                <div class="profile-introduction" th:text="${memberProfile.profileIntro}"></div>
+                                            </div>
+                                            <div class="profile-dividing-line"></div>
+                                            <div class="profile-badge-section">
+                                                <span class="badge shopbadge"></span>
+                                            </div>
+                                        </div>
+                                        <!-- 프로필 카드 있음-->
+                                        <div th:case="*" th:style="'background-image: url(../img/shop_img/' + ${memberProfile.profileCard} + '.png);'" class="profile-card uk-width-1-1" >
+                                            <a id="profile">
+                                                <!-- 프로필 사진 테두리 있음-->
+                                                <div class="profile-header" th:if="${!memberProfile.profileHeader.equals('x')}" th:style="'background-image: url(../img/shop_img/' + ${memberProfile.profileHeader} + '.png);'">
+                                                    <div class="profile-image">
+                                                        <img th:if="${!memberProfile.profileImage.equals('x')}" th:src="'/image/' + ${memberProfile.profileImage}" alt="NO-IMAGE">
+                                                        <img th:if="${memberProfile.profileImage.equals('x')}" src="../img/doyun_icon.png" alt="NO-IMAGE">
+                                                    </div>
+                                                </div>
+                                                <!-- 프로필 사진 테두리 기본-->
+                                                <div class="profile-header" th:if="${memberProfile.profileHeader.equals('x')}">
+                                                    <div class="profile-image">
+                                                        <img th:if="${!memberProfile.profileImage.equals('x')}" th:src="'/image/' + ${memberProfile.profileImage}" alt="NO-IMAGE">
+                                                        <img th:if="${memberProfile.profileImage.equals('x')}" src="../img/doyun_icon.png" alt="NO-IMAGE">
+                                                    </div>
+                                                </div>
+                                                <div class="profile-user_info">
+                                                    <div class="profile-user_level"><span th:text="${'LV : ' + level}"></span></div>
+                                                    <div class="profile-user_nick"><span th:text="${nickname}"></span></div>
+                                                    <img class="badge" th:if="${!memberProfile.ProfileRepBadge.equals('x')}" th:src="@{'../img/shop_img/' + ${memberProfile.ProfileRepBadge} + '.png'}" alt="NO-SYMBOL">
+                                                    <img class="badge" th:if="${memberProfile.ProfileRepBadge.equals('x')}" alt="NO-SYMBOL">
+                                                </div>
+                                            </a>
+                                            <div class="profile-dividing-line"></div>
+                                            <div class="profile-main">
+                                                <div class="profile-introduction" th:text="${memberProfile.profileIntro}"></div>
+                                            </div>
+                                            <div class="profile-dividing-line"></div>
+                                            <div class="profile-badge-section">
+                                                <span class="badge shopbadge"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="uk-width-1-1" th:if="${memberProfile==null}">
+                                        <div class="profile-card uk-width-1-1">
+                                            <a id="profile">
+                                                <div class="profile-header">
+                                                    <div class="profile-image">
+                                                        <img src="../img/doyun_icon.png" alt="NO-IMAGE">
+                                                    </div>
+                                                </div>
+                                                <div class="profile-user_info">
+                                                    <div class="profile-user_level"><span>LV : 0</span></div>
+                                                    <div class="profile-user_nick"><span>Nickname</span></div>
+                                                    <img class="badge" alt="NO-SYMBOL">
+                                                </div>
+                                            </a>
+                                            <div class="profile-dividing-line width-1-1"></div>
+                                            <div class="profile-main">
+                                                <div class="profile-introduction">소개글을 입력해주세요</div>
+                                            </div>
+                                            <div class="profile-dividing-line width-1-1"></div>
+                                            <div class="profile-badge-section">
+                                                <span class="badge shopbadge"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="widjet__head">
+                                        <h3 class="uk-text-lead">Preview</h3>
+                                    </div>
+                                    <div class="game-card uk-width-1-1">
+                                        <div class="setbtn">
+                                            <ul id="previewList">
+                                                <li id="801" class="list-item"></li>
+                                                <li id="802" class="list-item"></li>
+                                                <li id="803" class="list-item"></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="uk-width-1-1">
+                                        <input class="reset_btn" type='submit' value='초기화' th:onclick="hidePreview()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <br>
+                <footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+                </main>
+            </div>
+            <!-- 팝업 내용 -->
+            <div class="popup" id="popup">
+                <span class="close" onclick="closePopup()">&times;</span>
+                <img class="popup-content" id="popupImage">
+            </div>
+            <div th:replace="~{fragments/mainModal :: mainModalFragment}"></div>
+        </div>
+    </body>
+    
+</html>
+    

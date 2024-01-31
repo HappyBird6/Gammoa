@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <header th:fragment="headerFragment" class="page-header">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+            integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- 웹소켓 -->
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+        <script src="../js/module/cookie.js"></script>
+        <link rel="stylesheet" href="../css/header_point.css" />
+        <style>
+            .page-header__content .fa-coins {
+                color: #ffbf00;
+            }
+
+            .glowCoin {
+                animation: glowCoinAnime 1s infinite alternate;
+            }
+            .dark-theme .glowCoin{
+                animation: glowCoinAnime2 1s infinite alternate;
+            }
+            @keyframes glowCoinAnime {
+                0%,20% {
+                    color: #ffbf00;
+                }
+                100% {
+                    color: #fff;
+                }
+            }
+            @keyframes glowCoinAnime2 {
+                0%,20% {
+                    color: #ffbf00;
+                }
+                100% {
+                    color: #0C1826;
+                }
+            }
+        </style>
+        <script th:inline="javascript">
+            let now;
+            let max;
+            let isIntervalRunning = false;
+
+            const counter = ($counter) => {
+                if (isIntervalRunning) {
+                    now += (max - currentPoint);
+                    currentPoint = max;
+                    return;
+                } else {
+                    now = max - currentPoint;
+                    currentPoint = max;
+                }
+
+
+                isIntervalRunning = true;
+                // currentPoint 1700 이고 max = 2000이면
+                // now는 300 -> 270 -> 243 -> 220 -> 200 
+                // 1800 일때 now는 200임
+                // 1900 되니까 now 에서 100을 더해줘서 키워되야됨 300
+                const handle = setInterval(() => {
+                    if (now > 0) $counter.innerHTML = Math.ceil(max - now).toLocaleString();
+                    else if (now < 0) $counter.innerHTML = Math.floor(max - now).toLocaleString();
+                    // 목표수치에 도달하면 정지
+                    if ((now < 1 && now >= 0) || (now > -1 && now <= 0)) {
+                        clearInterval(handle);
+                        document.querySelector(".page-header__content .fa-coins").classList.remove("glowCoin");
+                        now = 0;
+                        isIntervalRunning = false;
+                    }
+                    // 증가되는 값이 계속하여 작아짐
+                    const step = now / 10;
+                    // 값을 적용시키면서 다음 차례에 영향을 끼침
+                    now -= step;
+                }, 50);
+            }
+            // 다크 모드 설정 값
+
+            let currentThemeIndex = 0;
+            // 로고 색상 변경용
+            let logo_img_paths;
+            let logo_text = ["white", "black"];
+
+            // 메인 컬러 변경용
+            const root = document.documentElement; // :root 
+
+            const main_color_values = [
+                getComputedStyle(root).getPropertyValue('--main-color-dark'),
+                getComputedStyle(root).getPropertyValue('--main-color-light')
+            ];
+            if (getCookie('darkMode')) {
+                if (getCookie('darkMode') === 'Y') {
+                    document.getElementsByTagName("body")[0].classList.add('dark-theme');
+                } else {
+                    document.getElementsByTagName("body")[0].classList.remove('dark-theme');
+                }
+            } else {
+                setCookie('darkMode', 'Y', 7);
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                logo_img_paths = [getContextPath() + "/img/logo_white.png", getContextPath() + "/img/logo_black.png"];
+                if (getCookie('darkMode') === 'Y') {
+                    document.getElementById('logo_img').src = logo_img_paths[0];
+                    document.querySelector(".page-header__logo_text").style.color = logo_text[0];
+                    // 메인 컬러 변경용
+                    root.style.setProperty('--main-color-now', main_color_values[0]);
+                }
+                else {
+                    document.getElementById('logo_img').src = logo_img_paths[1];
+                    document.querySelector(".page-header__logo_text").style.color = logo_text[1];
+                    // 메인 컬러 변경용
+                    root.style.setProperty('--main-color-now', main_color_values[1]);
+                }
+            })
+            document.getElementById("toggle").addEventListener("click", function () {
+                document.getElementsByTagName('body')[0].classList.toggle("dark-theme");
+                if (getCookie('darkMode') === 'Y') {
+                    setCookie('darkMode', 'N', 7);
+                } else if (getCookie('darkMode') === 'N') {
+                    setCookie('darkMode', 'Y', 7);
+                }
+                if (getCookie('darkMode') === 'Y') {
+                    document.getElementById('logo_img').src = logo_img_paths[0];
+                    document.querySelector(".page-header__logo_text").style.color = logo_text[0];
+                    // 메인 컬러 변경용
+                    root.style.setProperty('--main-color-now', main_color_values[0]);
+                }
+                else {
+                    document.getElementById('logo_img').src = logo_img_paths[1];
+                    document.querySelector(".page-header__logo_text").style.color = logo_text[1];
+                    // 메인 컬러 변경용
+                    root.style.setProperty('--main-color-now', main_color_values[1]);
+                }
+            });
+
+            // websocket ~~~~~~~~
+            let currentPoint = /*[[${currentPoint}]]*/0;
+            let memInfoStompClient = null;
+            let memId = 0;
+            document.addEventListener("DOMContentLoaded", function () {
+                memId = /*[[${memId}]]*/0;
+                if (memId !== 0) pointConnect();
+                document.getElementById("current-point").setAttribute("point", currentPoint);
+            });
+            function pointConnect() {
+                var socket = new SockJS('/ws');
+
+                memInfoStompClient = Stomp.over(socket);
+
+                memInfoStompClient.connect({}, function (frame) {
+                    memInfoStompClient.subscribe(`/topic/headerInfo/` + memId, function (response) {
+                        try {
+                            let headerInfo = JSON.parse(response.body);
+                            if (headerInfo.flag === 2) {
+                                alert("포인트 부족");
+                            }
+                            if (headerInfo.flag === 1) {
+                                // 정상
+                                let targetPoint = headerInfo.currentPoint;
+                                const $counter = document.querySelector("#current-point");
+                                max = targetPoint;
+                                document.querySelector(".page-header__content .fa-coins").classList.add("glowCoin");
+                                document.getElementById("current-point").setAttribute("point", targetPoint);
+                                setTimeout(() => counter($counter), 10);
+
+                            } else if (headerInfo.flag === 0 || headerInfo.flag === -1) {
+                                // 에러
+                                alert("에러");
+                            }
+
+
+                        } catch (err) {
+                            console.log("에러 : " + err);
+                        }
+                    });
+                });
+            }
+
+            async function sendPointChange(point, pointKindCd) {
+                await memInfoStompClient.send(`/app/memPointChange`, {}, JSON.stringify({
+                    memId: Number(memId),
+                    pointKindCd: pointKindCd,
+                    currentPoint: Number(currentPoint),
+                    pointChange: Number(point),
+                    flag: -1
+                }));
+            }
+            function getContextPath() {
+                var path = window.location.pathname.split('/');
+                var contextPath = "";
+                for (let i = 0; i < path.length - 1; i++) {
+                    contextPath += "/..";
+                }
+                // console.log("path : "+contextPath)
+                return contextPath;
+            }
+            function formatNumberTok(value) {
+                var formattedValue = value > 999999 ? (value / 1000000).toFixed(1) + 'm' : (value > 999 ? (value / 1000).toFixed(1) + 'k' : value);
+                return formattedValue;
+            }
+            function getColorRatio(bettingRatio) {
+                if (bettingRatio >= 90) {
+                    return '#FF0000'; // 빨간색
+                } else if (bettingRatio >= 70) {
+                    return '#FFA500'; // 주황색
+                } else if (bettingRatio >= 50) {
+                    return '#00FF00'; // 연두색
+                } else if (bettingRatio >= 30) {
+                    return '#00F0FF'; // 민트색
+                } else {
+                    return '#0FCFA5'; // 검은색
+                }
+            }
+        </script>
+        <div class="page-header__inner">
+            <!-- 헤더 사이드바(로고) -->
+            <div class="page-header__sidebar">
+                <div class="page-header__menu-btn"><button class="menu-btn ico_menu is-active"></button></div>
+                <a href="/">
+                    <div class="page-header__logo"><img src="../img/logo_white.png" alt="logo" id="logo_img"><span
+                            class="page-header__logo_text">G A M M O A</span></div>
+                </a>
+            </div>
+            <!-- 헤더 컨텐츠 -->
+            <div class="page-header__content">
+                <div class="page-header__search">
+                    <div class="search">
+                        <!-- <div class="search__input"><i class="ico_search"></i><input type="search" name="search"
+                                placeholder="Search"></div>
+                        <div class="search__btn"><button type="button"><i class="ico_microphone"></i></button></div> -->
+                    </div>
+                </div>
+
+                <div class="page-header__action">
+                    <!-- <div onclick="sendPointChange(100,'50001')">100 포인트 추가</div>
+                    <div onclick="sendPointChange(-100,'50001')">100 포인트 감소</div> -->
+                    <a th:if="${nickname}" class="action-btn wallet" th:href="@{/wallet}"><i
+                            class="fa-solid fa-coins ico_fontawesome"></i></a>
+                    <div id="current-point" point=""
+                        th:utext="'<script>var currentPointNum = '+${currentPoint}+';var currentPointComma = currentPointNum.toLocaleString(); document.write(currentPointComma);</script>'">
+                    </div>
+
+                    <!-- <a th:if="${nickname}" class="action-btn" href="06_chats.html"><i class="ico_message"></i><span
+                            class="animation-ripple-delay1"></span></a>
+                    <a th:if="${nickname}" class="action-btn" href="07_friends.html"><i
+                            class="ico_notification"></i><span class="animation-ripple-delay2"></span></a> -->
+                    <a th:if="${nickname}" th:href="@{/logout}" class="action-btn"><i
+                            class="fa-solid fa-right-from-bracket ico_logout"></i></a>
+                    <a th:unless="${nickname}" th:href="@{/login}" class="action-btn"><i
+                            class="fa-solid fa-right-to-bracket ico_fontawesome"></i></a>
+                    <a th:if="${nickname}" class="profile" th:href="@{/profile}">
+                        <img th:if="${!memberProfile.profileImage.equals('x')}" th:src="'/image/' + ${memberProfile.profileImage}" alt="profile">
+                        <img th:if="${memberProfile.profileImage.equals('x')}" src="../img/doyun_icon.png" alt="profile">
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+</body>
+
+</html>

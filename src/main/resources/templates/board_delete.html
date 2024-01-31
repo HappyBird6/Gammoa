@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>GAMMOA</title>
+    <meta content="Templines" name="author">
+    <meta content="TeamHost" name="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="format-detection" content="telephone=no">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/libs.min.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/list_custom.css" />
+    <script src="../js/module/swiper.js"></script>
+    <script src="../js/libs.js"></script>
+    <script src="../js/main.js"></script>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&display=swap" rel="stylesheet">
+
+</head>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const active = document.getElementById("[[${navBoard}]]");
+        active.classList.add("uk-active");
+        const submenu = active.parentNode;
+        submenu.classList.remove("none");
+    });
+</script>
+<script type="text/javascript">
+    function deletePost() {
+        var confirmation = confirm('게시물을 삭제하시겠습니까?');
+        if (confirmation) {
+            document.dfrm.submit();
+        }
+    }
+</script>
+
+<body class="page-home dark-theme">
+
+    <input id="toggle" type="checkbox">
+
+
+
+    <!-- Loader-->
+    <div th:replace="~{fragments/loader :: loader1Fragment}" id="page-preloader"></div>
+    <!-- Loader end-->
+
+    <div class="page-wrapper">
+        <!-- 헤더 Fragment -->
+        <header th:replace="~{fragments/header :: headerFragment}">헤더 Fragment</header>
+        <!--  -->
+        <div class="page-content">
+            <!-- 사이드바 Fragment -->
+            <aside th:replace="~{fragments/sidebar :: sidebarFragment}" clsss = "sidebar is-show" id="sidebar">사이드바 Fragment</aside>
+            <!--  -->
+
+            <!-- 메인 -->
+            <main class="page-main">
+                <div class="widjet --filters">
+                    <div class="widjet__head">
+                        <h3 class="uk-text-lead" th:text='${boardCd_name}'></h3>
+                    </div>
+                </div>
+                <div class="widjet --filters">
+                    <div class="widjet__body">
+                        <div class="uk-grid uk-child-width-1-1@xl uk-child-width-1-1@xl uk-child-width-1-2@s uk-flex-middle uk-grid-small" data-uk-grid>
+                            <div class="uk-width-1-1">
+                                <!--게시판 코드 들어가는 장소-->
+                                <!-- <div class="con_txt"> -->
+                                <div class="widjet-game__title">
+                                    <form action="delete_ok" method="post" name="dfrm">
+                                        <input type="hidden" name="post_id" th:value="${post.postId}">
+                                        <input type="hidden" name="cpage" th:value="${cpage}">
+                                        <div class="contents_sub">	
+                                            <!--게시판-->
+                                            <div class="board_write">
+                                                <table>
+                                                    <tr class="board_write_tr">
+                                                        <th>제목</th>
+                                                        <td><input type="text" name="subject" th:value="${post.postTitle}" class="board_view_input" readonly/></td>
+                                                    </tr>
+                                                    <tr class="board_write_tr">
+                                                        <th>내용</th>
+                                                        <td><textarea name="content" class="board_editor_area" th:text="${post.postContent}" style="resize: none;"></textarea></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            
+                                            <div class="btn_area">
+                                                <div class="align_left">
+                                                    <a th:href="@{list(board_cd=${post.boardCd}, cpage=${cpage})}"><input type="button" value="목록" class="btn_list btn_txt02" style="cursor: pointer;"></a>
+                                                </div>
+                                                <div class="align_right">
+                                                    <input type="button" id="dbtn" value="삭제" class="btn_write btn_txt01" style="cursor: pointer;" onclick="deletePost()"/>
+                                                </div>
+                                            </div>
+                                            <!--//게시판-->
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+
+            </main>
+        </div>
+    </div>
+    <div th:replace="~{fragments/mainModal :: mainModalFragment}"></div>
+</body>
+
+</html>

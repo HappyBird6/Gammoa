@@ -1,0 +1,567 @@
+.wallet-main{
+    min-height: calc(100vh + 75px);
+}
+
+.wallet-info-point {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.wallet-info-totalPoint {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.33;
+    width: 100%;
+}
+.wallet-info-memberLevel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.33;
+    width: 100%;
+}
+.wallet-info-level {
+    position: relative;
+    /* z-index: 1; 또는 필요한 값으로 설정 */
+}
+.wallet-info-level:hover .level-table-section{
+    display: block;
+}
+.level-table-section{
+    position: absolute;
+    display: none;
+    z-index: 1;
+    background-color: #222;
+}
+.level-table{
+    display: flex;
+    border-top : 3px solid #F65100;
+    border-bottom: 3px solid #F65100;
+    color: #e5e5e5;
+}
+.level-table tbody{
+    width:150px;
+}
+.level-table tbody tr td:nth-child(2) {
+    border-right: 2px solid orange;
+}
+.level-table tbody:last-child tr td:nth-child(2){
+    border-right: none;
+}
+.level-table tbody:last-child {
+    border-right: none;
+}
+.level-table tbody tr td:nth-child(2) div{
+    width: 82px;
+    margin-left : 10px;
+}
+.level-table-memberLevel {
+    font-weight: 800px;
+    color : #F65100;
+}
+.level-table tbody tr td:first-child{
+    width: 50px;
+    border-right:1px solid orange;
+    display: flex;
+    justify-content: center;
+}
+.level-table-blank{
+    height: 10px;
+    background-color: orange;
+}
+.wallet-info-totalPoint > div{
+    margin-right:15px;
+}
+.wallet-info-memberLevel > div{
+    margin-right:15px;
+}
+.wallet-value {
+    color: #F65100;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.33;
+}
+.wallet-info-point .ico_fontawesome {
+    color: #646464;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.33;
+    padding-bottom: 5px;
+    margin-right: 10px;
+}
+.widjet__head{
+    height :40px;
+}
+/* 포인트 내역 */
+.widjet.--wallet-ph .widjet__body {
+    padding: 0;
+    background: none;
+}
+.dark-theme .widjet.--wallet-ph{
+    background-color: #181818;
+}
+.widjet.--wallet-ph{
+    max-height: 1000px;
+    background-color: #e0e0e0;
+    padding: 10px;
+}
+.overflow-scroll{
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.overflow-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+.dark-theme .overflow-scroll::-webkit-scrollbar-track {
+    background-color: #05353a;
+}
+.overflow-scroll::-webkit-scrollbar-track {
+    background-color: #11909e;
+}
+.overflow-scroll::-webkit-scrollbar-thumb {
+    background-color: var(--main-color-now);
+}
+.wallet-ph-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    max-height: 840px;
+}
+.wallet-ph-item {
+    height:150px;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.wallet-ph-item+.wallet-ph-item {
+    margin-top: 12px;
+}
+body.dark-theme .wallet-ph-item {
+    background: #1A2634;
+}
+.wallet-ph-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 200px;
+}
+.wallet-ph-div-line{
+    width: 1px;
+    background-color: #646464;
+    border-radius: 15px;
+    height: 100%;
+    margin-left: 1%;
+    margin-right: 3%;
+}
+.dark-theme .wallet-ph-div-line{
+    background-color: #646464;
+}
+.wallet-ph-info {
+    height: 100%;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+}
+
+.wallet-ph-title {
+    
+    height : 20%;
+    font-size:15px;
+    -o-text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.31;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.wallet-ph-datetime {
+    height: 20%;
+    color: #767676;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.36;
+}
+.wallet-ph-details{
+    display: flex;
+    flex-direction: column;
+    height: 60%;
+    justify-content: center;
+}
+.wallet-ph-details > div{
+    font-size : 15px;
+    display: flex;
+    align-items: center;
+
+}
+.wallet-ph-details div > div:nth-child(1){
+    width: 20%;
+}
+.dark-theme .wallet-ph-point{
+    color:#ffffff;
+}
+.wallet-ph-point {
+    height: 40%;
+    color: #000000;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.36;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+/* 베팅 내역 */
+.dark-theme .wallet-info-point .ico_fontawesome {
+    color: #ffffff;
+}
+.wallet-betting-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 200px;
+}
+.battle-profile-media {    
+    width: 80px;
+    height : 80px;
+}
+.battle-profile-media img{
+    border-radius: 10px;
+    height: 100%;
+    
+}
+
+.wallet-betting-item .vs{
+    color:black;
+    margin-left:2%;
+    margin-right:2%;
+    width: 16%;
+}
+.wallet-betting-item__title{
+    font-family: 'Inter', sans-serif;
+}
+.wallet-ph-item__title{
+    font-family: 'Inter', sans-serif;
+}
+.widjet.--wallet-betting .widjet__body {
+    padding: 0;
+    background: none;
+    max-height: 507px;
+}
+.widjet.--wallet-betting{
+    background-color: #e0e0e0;
+    padding: 10px;
+    max-height: 547px;
+}
+.dark-theme .widjet.--wallet-betting{
+    background-color: #181818;
+    padding: 10px;
+    max-height: 547px;
+}
+.wallet-betting-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    max-height: 480px;
+}
+.wallet-betting-div-line{
+    width: 1px;
+    background-color: #646464;
+    border-radius: 15px;
+    height: 100%;
+    margin-left: 1%;
+    margin-right: 3%;
+}
+.dark-theme .wallet-betting-div-line{
+    background-color: #646464;
+}
+.wallet-betting-item {
+    height:150px;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.wallet-betting-item+.wallet-betting-item {
+    margin-top: 12px;
+}
+
+.wallet-betting-item__logo {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 65px;
+    flex: 0 0 65px;
+    width: 65px;
+    height: 65px;
+    margin-right: 10px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.wallet-betting-item__info {
+    height: 100%;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+}
+.wallet-betting-item__title {
+    height : 40%;
+    font-size:15px;
+    -o-text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.31;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.wallet-betting-item__title a{
+    color: #353535;
+}
+.dark-theme .wallet-betting-item__title a{
+    color:white;
+}
+.wallet-betting-item__game {
+    height: 20%;
+    color: #767676;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.36;
+}
+.wallet-betting-info{
+    height: 40%;
+}
+.wallet-betting-item__state{
+    color:black;
+    font-size: 13px;
+}
+.wallet-betting-item__state-section{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end; 
+}
+.dark-theme .wallet-betting-item__state{
+    color:wheat;
+}
+.wallet-betting-item__point {
+    color: #ff79ac;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.36;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+
+body.dark-theme .wallet-betting-item {
+    background: #1A2634;
+}
+
+body.dark-theme .wallet-betting-item__title {
+    color: #fff;
+}
+body.dark-theme .wallet-ph-item__title {
+    color: #fff;
+}
+body.dark-theme .wallet-betting-item__game {
+    color: #A1A1A1;
+}
+body.dark-theme .wallet-ph-item__game {
+    color: #A1A1A1;
+}
+@media (max-width: 767px) {
+    .wallet-betting-item__title {
+        font-size: calc(12px + 6.8 * ((100vw - 320px) / 1920));
+    }
+    .wallet-ph-item__title {
+        font-size: calc(12px + 6.8 * ((100vw - 320px) / 1920));
+    }
+    .wallet-betting-item__game {
+        font-size: calc(12px + 3.4 * ((100vw - 320px) / 1920));
+    }
+    .wallet-ph-item__game {
+        font-size: calc(12px + 3.4 * ((100vw - 320px) / 1920));
+    }
+    .wallet-betting-item__point {
+        font-size: calc(12px + 3.4 * ((100vw - 320px) / 1920));
+    }
+    .wallet-ph-point {
+        font-size: calc(12px + 3.4 * ((100vw - 320px) / 1920));
+    }
+}
+
+@media only screen and (max-width: 639px) {
+    .wallet-betting-item {
+        padding: 12px;
+    }
+    .wallet-ph-item {
+        padding: 12px;
+    }
+    .wallet-betting-item__logo {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 40px;
+        flex: 0 0 40px;
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media only screen and (max-width: 1920px) and (min-width: 767px) {
+    .wallet-betting-item__title {
+        font-size: calc(12px + 4 * (100vw / 1920));
+    }
+    .wallet-ph-item__title {
+        font-size: calc(12px + 4 * (100vw / 1920));
+    }
+    .wallet-betting-item__game {
+        font-size: calc(12px + 2 * (100vw / 1920));
+    }
+    .wallet-ph-item__game {
+        font-size: calc(12px + 2 * (100vw / 1920));
+    }
+    .wallet-betting-item__point {
+        font-size: calc(12px + 2 * (100vw / 1920));
+    }
+    .wallet-ph-point {
+        font-size: calc(12px + 2 * (100vw / 1920));
+    }
+}
+
+.receive_btn{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 34px;
+    border-radius: 10px;
+    font-size: 15px;
+    background: #ffbf00;
+    color: black;
+    box-shadow: #ffbf00 0px 0px 37px 1px;
+    cursor: pointer;
+}
+.receive_btn > div{
+    
+    width: 100%;
+    display: flex;
+    margin-left : 20px;
+}
+.receive_btn > i{
+    margin-left : 10px;
+}
+.receive_btn .check{
+    display: none;
+
+}
+.receive_btn .click{
+    user-select: none;
+    margin-left: 0px;
+    position: absolute;
+    width: auto;
+    color: rgb(147, 112, 216);
+    font-size: 17px;
+    top: 11%;
+    left: 58%;
+    transform: rotate(20deg);
+    animation: clickGlow 1s infinite alternate;
+}
+.receive_btn:active{
+    background: #ffe189;
+    box-shadow: #ffe189 0px 0px 37px 1px;
+}
+@keyframes clickGlow {
+    0% {
+        color: rgba(147,112,216,1);
+    }
+    20% {
+        color: rgba(147,112,216,1);
+    }
+    100% {
+        color: rgba(147,112,216,0);
+    }
+}
+.btn-pnr{
+    background-color: white;
+    color : black;
+
+    border: 1px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    border-radius: 5px;
+    font-size: 15px;
+    margin-right: 10px;
+}
+.dark-theme .btn-pnr{
+    background-color: #1A2634;
+    color:white;
+}
+.nice-select{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    border:1px solid;
+}
+.pointFloating{
+    position:absolute; 
+    display: none; 
+    top: 7px;
+    left: 45px;
+    color:#ffbf00;
+}
+.inactive .click{
+    display: none;
+}
+.inactive{
+    color : grey;
+    background-color : #4f3b00;
+    box-shadow : none;
+    cursor : auto;
+}
+.inactive:active{
+    background: #4f3b00;
+    box-shadow: none;
+    
+}
+.inactive .click{
+    display: none;
+}
