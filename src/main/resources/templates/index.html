@@ -163,7 +163,7 @@
                                                             </div>
                                                             <div class="battle-profile-media">
                                                                 <a>
-                                                                    <img th:src="@{'/image/' + ${image}}" alt="NO IMG" />
+                                                                    <img th:src="@{'/img/' + ${image}}" alt="NO IMG" />
                                                                 </a>
                                                             </div>
                                                         </div>      
@@ -220,7 +220,7 @@
                                                         <div class="battle-profile-right">
                                                             <div class="battle-profile-media">
                                                                 <a th:if="${battle.client}">
-                                                                    <img th:src="@{'/image/' + ${ClImage}}" alt="NO IMG" />
+                                                                    <img th:src="@{'/img/' + ${ClImage}}" alt="NO IMG" />
                                                                 </a>
                                                                 <a th:unless="${battle.client}">
                                                                     <img th:src="@{/img/X_img.jpg}" alt="NO IMG" />
@@ -416,8 +416,7 @@
                                 <div class="widjet_color uk-grid uk-child-width-1-1@xl uk-child-width-1-1@xl uk-child-width-1-1@s uk-flex-middle uk-grid-small" data-uk-grid>
                                     <!--게시판 코드 들어가는 장소-->
                                     <!-- <div class="con_txt"> -->
-                                    <div class="widjet_size widjet-game__title">
-                                        <a th:href="@{'/board/list?board_cd=20004'}" class="align_right seemore">더 보기</a>
+                                    <div class="widjet_size widjet-game__title asdf">
                                         <div class="board_top">
 
                                             <table width="100%">
