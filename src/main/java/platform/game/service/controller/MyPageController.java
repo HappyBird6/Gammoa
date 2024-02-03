@@ -39,7 +39,6 @@ import platform.game.service.entity.Member;
 import platform.game.service.entity.RiotInfo;
 import platform.game.service.filter.JwtAuthFilter;
 import platform.game.service.service.MemberInfoDetails;
-import platform.game.service.service.RiotService;
 import platform.game.service.service.jwt.JwtManager;
 
 @RestController
@@ -57,8 +56,6 @@ public class MyPageController {
     JwtManager jwtManager;
     @Autowired
     private JwtAuthFilter authFilter;
-    @Autowired
-    private RiotService riotService;
 
     @GetMapping("/{userid}")
     @PreAuthorize("hasAuthority('ROLE_USER')")
@@ -82,18 +79,6 @@ public class MyPageController {
 
         return new ModelAndView("mypage");
     }
- 
-    @GetMapping("/summonerByName")
-    public RiotInfo callSummonerByName(String summonerName){
-        // String summonerName = "Java를자바";
-    
-        summonerName = summonerName.replaceAll(" ","%20");
- 
-        RiotInfo apiResult = riotService.callRiotAPISummonerByName(summonerName);
- 
-        return apiResult;
-    }
-
     @PostMapping("/tui-editor/image-upload")
     public String uploadEditorImage(@RequestParam final MultipartFile image) {
         System.out.println( "uploadEditorImage() 실행" );
