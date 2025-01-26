@@ -75,6 +75,7 @@ const setSwiper = function () {
 {/* <div class="recommend-slide row user"> */ }
 const setSwiperWrapper = async function () {
     let datalist = await SwiperData();
+    console.log(datalist);
     let userprofile = await UserProfileData(JSON.stringify(datalist));
     let slideNum = datalist.length
     let html = "";
@@ -105,7 +106,7 @@ const setSwiperWrapper = async function () {
 }
 const createSwiperProfile = function (level, nickname, introduce, header, card, repbadge, profileimage, badgelist) {
     let memNickname = nickname;
-    let memImageName = "doyun_icon.png";
+    let memImageName = "X_img.jpg";
     let memLevel = level;
     let memHeader = header + ".png";
     let memCard = card + ".png";
@@ -144,13 +145,15 @@ const createSwiperProfile = function (level, nickname, introduce, header, card, 
             }
         }
     }
-
+    if(memImageName=='x'){
+        memImageName = "X_img.jpg";
+    }
     let membProfileHTML = `
         <div class="profile-card" ${memCardStyle}>
             <a id="profile">
                 <div class="profile-header" ${memHeaderStyle}>
                     <div class="profile-image">
-                        <img src="/image/${memImageName}" alt="NO-IMAGE">
+                        <img src="../img/profileimage/${memImageName}">
                     </div>
                 </div>
                 <div class="profile-user_info">

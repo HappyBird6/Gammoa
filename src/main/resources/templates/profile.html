@@ -69,8 +69,8 @@
                             <div class="widjet__body">
                                 <div class="user-info">
                                     <div class="user-info__avatar" style="border: 3px solid #0ff;">
-                                        <img th:if="${!memberProfile.profileImage.equals('x')}" th:src="'/image/' + ${memberProfile.profileImage}" alt="profile" style="width:100%; height:100%">
-                                        <img th:if="${memberProfile.profileImage.equals('x')}" src="../img/doyun_icon.png" alt="profile" style="width:100%; height:100%">
+                                        <img th:if="${!memberProfile.profileImage.equals('x')}" th:src="'../img/profileImage/' + ${memberProfile.profileImage}" alt="profile" style="width:100%; height:100%">
+                                        <img th:if="${memberProfile.profileImage.equals('x')}" src="../img/profileImage/X_img.jpg" alt="profile" style="width:100%; height:100%">
                                     </div>
                                     <div class="user-info__box">
                                         <div class="user-info__title" th:text="${'LV : ' + member.memLvl + ' &nbsp ' + member.memNick + '( ' + member.memEmail + ' )'}"></div>

@@ -60,6 +60,10 @@ public class RankController {
     @ResponseBody
     public List<Integer> getLevelChart() {
         List<Integer> LevelChart = rankDAO.getLevelList();
+        // System.out.println("디버그 : 레벨차트 확인1");
+        // for(Integer e : LevelChart){
+        //     System.out.println(e);
+        // }
         return LevelChart;
     }
 

@@ -238,16 +238,20 @@ const verifyNicknameContraints = function () {
     const nicknameAlert = document.getElementById('nicknameAlert');
     nicknameAlert.innerHTML = "";
 
+    console.log(nickname.length);
     if (nickname == '') {
-        nicknameLabel.style.color = "#aaa";
+        nicknameLabel.style.color = "red";
+        console.log("nickname is empty");
         return false;
     }
-    if (nickname.search(/\W|\s/g) > -1) {
+    if (nickname.search(/[^\w\uAC00-\uD7A3]|\s/g) > -1) {
         nicknameLabel.style.color = "red";
+        console.log("222");
         return false;
     }
     if (nickname.length < 4 || nickname.length > 8) {
         nicknameLabel.style.color = "red";
+        console.log("nickname 글자수 다름");
         return false;
     }
     nicknameLabel.style.color = "green";

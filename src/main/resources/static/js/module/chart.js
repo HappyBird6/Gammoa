@@ -109,7 +109,7 @@ const LevelChart = async function() {
                 datasets: [
                     {
                         label: '레벨 구간 별 유저수',
-                        data: ({'0~5':Level[0], '5~10':Level[1], '10~15':Level[2], '15~20':Level[3], '20~25':Level[4], '25~30':Level[5], '30~35':Level[6], '35~40':Level[7], '40~45':Level[8], '45~50':Level[9], '50~55':Level[10], '55~60':Level[11], '60~65':Level[12], '65~70':Level[13], '70~75':Level[14], '75~80':Level[15], '80~85':Level[16], '85~90':Level[17], '90~95':Level[18], '95~':Level[19]}),
+                        data: ({'1~5':Level[0], '6~10':Level[1], '11~15':Level[2], '16~20':Level[3], '21~25':Level[4], '26~30':Level[5], '31~35':Level[6], '36~40':Level[7], '41~45':Level[8], '46~50':Level[9], '51~55':Level[10], '56~60':Level[11], '61~65':Level[12], '66~70':Level[13], '71~75':Level[14], '76~80':Level[15], '81~85':Level[16], '86~90':Level[17], '91~95':Level[18], '96~':Level[19]}),
                         borderColor: 'rgb(75, 0, 192)',
                         fill: false,
                         stepped: false,

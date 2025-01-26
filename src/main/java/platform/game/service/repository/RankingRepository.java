@@ -1,9 +1,11 @@
 package platform.game.service.repository;
 
 import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
 import platform.game.service.entity.Ranking;
 
 @Repository
@@ -19,7 +21,8 @@ public interface RankingRepository extends JpaRepository<Ranking, Integer> {
     List<Ranking> findTop10ByOrderByRankDesc();
 
 
-    @Query(nativeQuery = true, value = "SELECT COUNT(*) AS countInRange , floor(mem_lvl / 5) * 5 AS levelRange FROM member GROUP BY levelRange ORDER BY levelRange")
+    // @Query(nativeQuery = true, value = "SELECT COUNT(*) AS countInRange , floor(mem_lvl / 5) * 5 AS levelRange FROM member GROUP BY levelRange ORDER BY levelRange")
+    @Query(nativeQuery = true, value = "WITH RECURSIVE rangeTable AS (SELECT 1 AS rangeStart UNION ALL SELECT rangeStart + 5 FROM rangeTable WHERE rangeStart + 5 <= 100) SELECT COALESCE(COUNT(m.mem_lvl), 0) AS countInRange FROM rangeTable r LEFT JOIN member m ON m.mem_lvl BETWEEN r.rangeStart AND r.rangeStart + 4 GROUP BY r.rangeStart ORDER BY r.rangeStart")
     List<Integer> GetLevelRank();
 
     @Query(nativeQuery = true, value = "SELECT \r\n" + //

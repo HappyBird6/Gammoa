@@ -91,11 +91,12 @@ public interface SqlMapperInter {
         int setOtherWinRateRank(String game_cd);
 
         // 구분 없이 레벨 랭킹
-        @Select("select r.rank, m.mem_nick, m.mem_lvl from ranking r join member m on r.rank_code='Level' and m.mem_id=r.mem_id and r.game_cd=0 order by r.rank")
+        @Select("select m.mem_nick, m.mem_lvl from member m order by m.mem_lvl DESC")
         public List<LevelRankTO> getLevelRank();
 
         // 구분 없이 상위 10명만
-        @Select("SELECT r.rank, m.mem_nick, m.mem_lvl FROM ranking r JOIN member m ON r.rank_code='Level' AND m.mem_id=r.mem_id AND r.game_cd=0 ORDER BY r.rank ASC LIMIT 10")
+        // @Select("SELECT r.rank, m.mem_nick, m.mem_lvl FROM ranking r JOIN member m ON r.rank_code='Level' AND m.mem_id=r.mem_id AND r.game_cd=0 ORDER BY r.rank ASC LIMIT 10")
+        @Select("select m.mem_nick, m.mem_lvl from member m order by m.mem_lvl DESC LIMIT 10")
         public List<LevelRankTO> getTop10LevelRanks();
 
         // 구분 없이 승률 랭킹

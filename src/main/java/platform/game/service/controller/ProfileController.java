@@ -215,8 +215,8 @@ public class ProfileController {
         Member member = ((MemberInfoDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
                 .getMember();
 
-        String Path = System.getProperty("user.dir");
-        String upload = Path + "/profileimage/";
+        String path = System.getProperty("user.dir");
+        String upload = path + "/src/main/resources/static/img/profileimage/";
         String filename = member.getMemId() + "_" + image.getOriginalFilename();
 
         try {

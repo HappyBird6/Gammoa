@@ -109,11 +109,11 @@
                                     <canvas id="levels" style='width:90%; margin: auto; height:244px;'></canvas>
                                     <script type="text/javascript">
                                         LevelChart();
-                                        </script>   
+                                    </script>   
                                     <!--게시판 코드 들어가는 장소-->
                                     <!-- <div class="con_txt"> -->
                                         <div class="widjet_size widjet-game__title">
-                                        <div class="">
+                                        <div class="" style="font-size:11px">
                                             <table width="100%">
                                                 <tr class="board_top_tr">
                                                     <th width="25%" >순위</th>
@@ -122,7 +122,7 @@
                                                 </tr>
                                                 <!-- 통합 레벨 랭크 테이블 -->
                                                 <tr class="board_center_tr" th:if="${level!=null}" th:each="to, i:${level}">
-                                                    <td style="text-align: center;" th:text="${to.rank}"></td>
+                                                    <td style="text-align: center;" th:text="${i.index+1}"></td>
                                                     <td style="text-align: center;" th:text="${to.mem_nick}"></td>
                                                     <td style="text-align: center;" th:text="${to.mem_lvl}"></td>
                                                 </tr>
@@ -163,7 +163,7 @@
                                                             </div>
                                                             <div class="battle-profile-media">
                                                                 <a>
-                                                                    <img th:src="@{'/img/' + ${image}}" alt="NO IMG" />
+                                                                    <img th:src="@{'/img/profileimage/' + ${image}}" alt="NO IMG" />
                                                                 </a>
                                                             </div>
                                                         </div>      
@@ -220,10 +220,10 @@
                                                         <div class="battle-profile-right">
                                                             <div class="battle-profile-media">
                                                                 <a th:if="${battle.client}">
-                                                                    <img th:src="@{'/img/' + ${ClImage}}" alt="NO IMG" />
+                                                                    <img th:src="@{'/img/profileimage/' + ${ClImage}}" alt="NO IMG" />
                                                                 </a>
                                                                 <a th:unless="${battle.client}">
-                                                                    <img th:src="@{/img/X_img.jpg}" alt="NO IMG" />
+                                                                    <img th:src="@{/img/profileimage/X_img.jpg}" alt="NO IMG" />
                                                                 </a>
                                                             </div>
                                                             <div class="battle-profile-info">
