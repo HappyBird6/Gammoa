@@ -28,7 +28,7 @@
 + [ERD] https://www.erdcloud.com/d/phnPQx7Y6eb3PEgD4
 ![GAMMOA ERD](https://github.com/user-attachments/assets/7986d0e4-e7d7-442a-aadf-8479a6bdfb6a)
 
-+ [I.A.]
++ [I.A.] https://docs.google.com/spreadsheets/d/e/2PACX-1vSH_g8bsgR4myaNRF_1J5lAC4tiW9WCoZ3_qyuEv2L5nE_7Gsw2ahzwF4osLGxhecoi7zmQilw5zoRx/pubhtml <br>
 ![GAMMOA I A  part 1](https://github.com/user-attachments/assets/ad16fd1a-b3f0-4430-93cf-841aebd67fd6)
 ![GAMMOA I A  part 2](https://github.com/user-attachments/assets/541a6a39-d239-42bb-8f7d-15bb6f955a0d)
 
