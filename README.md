@@ -32,12 +32,34 @@
 ![GAMMOA I A  part 1](https://github.com/user-attachments/assets/ad16fd1a-b3f0-4430-93cf-841aebd67fd6)
 ![GAMMOA I A  part 2](https://github.com/user-attachments/assets/541a6a39-d239-42bb-8f7d-15bb6f955a0d)
 
-### 학습 사항
-<hr>
+## [HOME] <br>
+![HOME 1](https://github.com/user-attachments/assets/f5c15456-6b12-471b-8f48-a4e4b498c1f1)
+![HOME 2](https://github.com/user-attachments/assets/73eea23a-2b7f-4e75-bcf5-fa6a53bed133)
 
+## [LOGIN] <br>
+![login index](https://github.com/user-attachments/assets/8c29af94-dcf1-4c56-bf68-20b672320ca2)
+![login siginup](https://github.com/user-attachments/assets/e1258dfa-99d2-44ac-b332-32afac9ea1bb)
+![GAMMOA email 인증번호](https://github.com/user-attachments/assets/5dfbc1f2-c249-4ec8-977a-62bf5d21b8aa)
 
+## [BATTLE] <br>
+![battle 게시글 리스트](https://github.com/user-attachments/assets/c43e2832-9433-4e34-88c2-265b0a8c5c87)
+![battle 글쓰기](https://github.com/user-attachments/assets/aa6af056-c68c-44b9-b974-fe4541171933)
+![battle 신청](https://github.com/user-attachments/assets/8edcb67a-7b58-4846-86ef-b74c8c68aaff)
+![battle 신청(작성자 기준)](https://github.com/user-attachments/assets/5c53674f-97f2-45da-849b-c7284a91da8d)
+![battle 수락후](https://github.com/user-attachments/assets/bce75d10-cd41-41fd-a3df-2aeb48496429)
+![battle 베팅 후](https://github.com/user-attachments/assets/6ceba943-60fc-4787-ab0f-9e7b68d33abb)
 
-### 트러블 / 피드백
-<hr>
+## [PROFILE] <br>
+![Profile 1](https://github.com/user-attachments/assets/9ea22217-bae8-4858-9b89-090ab32666d6)
+
+## [WALLET] <br>
+![wallet](https://github.com/user-attachments/assets/1406d939-15b3-4e65-8ff5-0502800a736c)
+
+## [RANKING] <br>
+![ranking 1](https://github.com/user-attachments/assets/f68b99f1-9270-41d5-9ed5-a4dfc9b9a0b9)
+![ranking 2](https://github.com/user-attachments/assets/2dcfc67d-d3ea-4f36-9df4-9df002781a77)
+
+## [SHOP] <br>
+![shop](https://github.com/user-attachments/assets/e321b47f-14db-4ade-ab0a-51cd5249a12d)
 
 
